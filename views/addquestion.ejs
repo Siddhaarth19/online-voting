@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <link href="./css/styles.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+</head>
+<body>
+    
+ <script>
+     
+
+
+ </script>
+<form action="/addquestion/<%=Election1.id %>" method="post" class="flex items-center justify-between gap-4">
+    <input type="hidden" name="_csrf" value="<%=csrfToken %>" />
+
+                <div class="py-2">
+                    <label >Enter the Question</label>
+                    <input type="text" name="questiontext" required class="border border-gray-600 rounded text-gray-900 p-2 w-full" />
+                </div>
+                <div class="py-2">
+                    <label for="description">Description</label>
+                    <input  name="description" style="height:100px;font-size:14pt;" type="text" class="border border-gray-600 rounded text-gray-900 p-2 w-full" required>
+                    </textarea> 
+                </div>
+
+                <div class="py-2">
+                    <button type="submit" class=" bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2 text-white" required >Add Question
+                    </button>
+                </div>
+               
+
+        </form>
+        </div>
+        <div>
+            
+   
+
+    
+</body>
+</html>

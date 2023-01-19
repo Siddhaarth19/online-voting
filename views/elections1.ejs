@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./css/styles.css" rel="stylesheet" />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body
+    style="
+      background-image: linear-gradient(
+        43deg,
+        rgba(57, 127, 206, 0.566),
+        rgba(19, 89, 174, 0.566)
+      );
+    "
+  >
+    <div><%- include('head.ejs') %></div>
+    <div>
+      <button
+        name="goback"
+        class="text-white bg-green-600 ml-5 hover:bg-green-800 font-medium rounded px-5 py-2"
+      >
+        <a href="/elections" class="px-4 p-2 font-bold text-xl">Go Back</a>
+      </button>
+    </div>
+    <div class="grid grid-cols-6">
+      <div class="col-start-2 col-span-3">
+        <h6 class="py-4 text-4xl font-bold"><%=title1 %></h6>
+        <div>
+          <h4 class="text-2xl font-bold">
+            There are <%=questionscount%> questions
+          </h4>
+        </div>
+
+        <div><%- include('addquestion.ejs',{Election1,csrfToken}) %></div>
+        <div>
+          <button
+            class="bg-green-600 hover:bg-green-800 text-xl rounded px-5 py-2 text-white"
+            onclick="window.location.href='/elections1/<%=Election1.id %>/question';"
+          >
+            Manage Questions
+          </button>
+        </div>
+        <br />
+        <br />
+        <div>
+          <h2 class="text-2xl font-bold">There are <%=voterscount%> voters</h2>
+        </div>
+
+        <div><%- include('addvoters.ejs',{csrfToken}) %></div>
+        <div>
+          <button
+            class="bg-green-600 hover:bg-green-800 text-xl rounded px-5 py-2 text-white"
+            onclick="window.location.href='/elections1/<%=Election1.id %>/voters';"
+          >
+            Manage Voters
+          </button>
+        </div>
+
+        <br />
+        <div>
+          <button
+            class="bg-green-600 hover:bg-green-800 text-xl rounded px-5 py-2 text-white"
+            onclick="window.location.href='/elections1/<%=Election1.id %>/preview';"
+          >
+            Preview election
+          </button>
+          &nbsp;
+          <button
+            class="bg-green-600 hover:bg-green-800 text-xl rounded px-5 py-2 text-white"
+            onclick="window.location.href='/elections1/<%=Election1.id %>/launch';"
+          >
+            Launch election
+          </button>
+        </div>
+        <br />
+        <div></div>
+      </div>
+    </div>
+  </body>
+</html>

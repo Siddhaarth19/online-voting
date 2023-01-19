@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    
+</head>
+<body  style="background-image: linear-gradient(43deg,rgba(47, 191, 217, 0.566),rgba(28, 151, 203, 0.566))">
+    <script>
+ var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+ 
+function updatevoters(id,vid) {
+          const title1 = document.getElementById(`${vid}`).value;
+          fetch(`/elections1/${id}/${vid}`, {
+                    method: 'put',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      id:id,
+                      vid:vid,
+                      email:title1,
+                      "_csrf": token,
+                 
+                }),
+                  }).then(async res => {
+                if (res.status !== 200) {
+                    const json = await res.json();
+                    showMessage(json.errors, 'error');
+                } else {
+                    location.reload();
+                }
+            });
+          }
+
+          const deletevoter = (id,voterId) => {
+            fetch(`/elections1/${id}/${voterId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id:id,
+                      voterId:voterId,
+                    "_csrf": token,
+                }),
+            }).then(async res => {
+                if (res.status !== 200) {
+                    const json = await res.json();
+                    showMessage(json.errors, 'error');
+                } else {
+                    location.reload();
+                }
+            });
+        }
+
+    </script>
+    <div>
+        <%- include('head.ejs') %>
+    </div>
+    <button  name="goback" class="text-white bg-green-600 ml-5 hover:bg-green-800 font-medium rounded px-5 py-2"><a href="/elections1/<%= id%>" class=" text-xl underline-offset-1  justify-center">Go back</a></button>
+<div class="grid grid-cols-6">
+    <div class="col-start-3 col-span-5">
+        
+            <div>
+                <% if (data.length==0){ %>
+                    <h5 class="font-bold text-2xl">You haven't registered any voters yet!</h5>
+                    <% } else{ %>
+                        <h4 class="mt-8 font-bold    text-2xl">List of Voters
+                            
+                        </h4>
+                        <br>
+                        <label class="pl-2 pr-2 text-2xl text-black-600  rounded border-gray-600">
+                           There are <%- data.length %> voters
+                        </label>
+                        <ul class="list-none">
+                            <% for(var i=0; i<data.length; i++) {%>
+                                <li class="Election-Item">
+                                    <div class="flex w-fit my-2 py-1 items-center rounded border ">
+                                        
+                                        <input type="text" class="p-3 rounded border border-black-600 w-full" name="email" placeholder="email"  id="<%= data[i].id %>" value="<%= data[i].email %>">
+
+                                        
+                                        
+                                        <div class="py-2 px-5">
+                                            <button  name="delete" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2"><a href="" onclick="deletevoter(<%=id%>,<%= data[i].id %>)">Delete</a></button>
+                                        </div> 
+                                        <div class="py-2 px-5">
+                                            <button  name="update" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2"><a href="" onclick="updatevoters(<%=id%>,<%= data[i].id %>)">Update</a></button>
+                                        </div> 
+                                    </div>
+                                </li>
+                                <% } %>
+                        </ul>
+                        <% } %>
+            </div>
+            <div>
+                </div>
+                <div>
+                    
+                </div>
+    </div>
+</div>
+</body>
+</html>
+
+
